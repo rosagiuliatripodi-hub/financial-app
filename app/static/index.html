@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Conti Chiari</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brand">
+    <span class="logo">Conti Chiari<span class="mark">&gt;</span></span>
+    <span class="org">
+      <span class="a">Accenture</span><br />
+      <span class="b">Application Engineering</span>
+    </span>
+  </div>
+
+  <div class="hero">
+    <h1>Capisci <span class="grad">cosa paghi</span></h1>
+    <p>Carica l'estratto del tuo conto. Ti mostro dove vanno i soldi, ti spiego le voci che
+       probabilmente non conosci e simuliamo insieme gli scenari che imposti tu.</p>
+  </div>
+
+  <!-- 1. caricamento -->
+  <section id="s-upload">
+    <div class="card">
+      <label class="drop" id="drop" for="file">
+        <input type="file" id="file" accept=".csv,text/csv" />
+        <strong>Trascina qui il tuo CSV, o clicca per sceglierlo</strong>
+        <span class="muted">Colonne attese: data, descrizione, importo. Massimo 2 MB.</span>
+      </label>
+      <div class="controls">
+        <label for="literacy">Quanto ti senti a tuo agio con i termini finanziari?</label>
+        <select id="literacy">
+          <option value="base">Poco — spiegami tutto da zero</option>
+          <option value="intermedio">Abbastanza — puoi usare i termini tecnici</option>
+        </select>
+        <button id="btn-analyze" disabled>Analizza</button>
+      </div>
+      <p class="muted" style="margin-top:14px">
+        Non hai un estratto sotto mano? Scarica
+        <a href="/sample/estratto-conto-esempio.csv" download style="color:var(--purple-light)">il file di esempio</a>,
+        oppure <button id="btn-demo" class="linklike">apri una sessione già analizzata</button>.
+      </p>
+      <div class="status" id="st-upload"></div>
+    </div>
+  </section>
+
+  <div class="banner" id="replay-banner" hidden>
+    <strong>Sessione salvata.</strong> Quello che vedi è l'output di un'analisi già eseguita,
+    riletto da disco: nessun agente sta girando adesso, e il pannello dei token resta a zero.
+  </div>
+
+  <!-- 2. quadro -->
+  <section id="s-quadro" hidden>
+    <div class="card">
+      <h3>Il tuo quadro</h3>
+      <h2>Dove vanno i soldi</h2>
+      <p class="lead" id="quadro-period"></p>
+      <div class="tiles" id="totals"></div>
+      <div class="bars" id="bars" style="margin-top:22px"></div>
+      <p class="muted" id="rejected-note" style="margin-top:14px"></p>
+    </div>
+  </section>
+
+  <!-- 3. perimetro dei dati -->
+  <section id="s-gaps" hidden>
+    <div class="card accent">
+      <h3>Cosa questo file non può mostrarmi</h3>
+      <h2>Il quadro è parziale</h2>
+      <p class="lead" id="coverage-note"></p>
+      <div id="gaps"></div>
+      <button id="btn-recalc">Ricalcola con questi importi</button>
+      <div class="status" id="st-gaps"></div>
+      <div id="compare" hidden></div>
+    </div>
+  </section>
+
+  <!-- 4. spiegazioni -->
+  <section id="s-explain" hidden>
+    <div class="card">
+      <h3>Le voci dei tuoi dati</h3>
+      <h2>Cosa significano</h2>
+      <div id="explain"></div>
+      <div id="explain-blocked"></div>
+    </div>
+  </section>
+
+  <!-- 5. simulatore -->
+  <section id="s-sim" hidden>
+    <div class="card">
+      <h3>Scenari che imposti tu</h3>
+      <h2>E se…</h2>
+      <p class="lead">I valori qui sotto sono ipotesi tue, non previsioni. Il sistema calcola
+         cosa succederebbe se restassero costanti.</p>
+      <div class="sliders">
+        <div class="slider">
+          <label for="sl-monthly">Accantoni ogni mese <span class="out" id="out-monthly">50 €</span></label>
+          <input type="range" id="sl-monthly" min="10" max="500" step="10" value="50" />
+        </div>
+        <div class="slider">
+          <label for="sl-months">Per <span class="out" id="out-months">36 mesi</span></label>
+          <input type="range" id="sl-months" min="6" max="120" step="6" value="36" />
+        </div>
+        <div class="slider">
+          <label for="sl-rate">Rendimento ipotizzato <span class="out" id="out-rate">0,0 %</span></label>
+          <input type="range" id="sl-rate" min="0" max="60" step="1" value="0" />
+        </div>
+        <div class="slider">
+          <label for="sl-infl">Inflazione ipotizzata <span class="out" id="out-infl">2,0 %</span></label>
+          <input type="range" id="sl-infl" min="0" max="60" step="1" value="20" />
+        </div>
+      </div>
+      <button id="btn-sim" style="margin-top:18px">Simula</button>
+      <div class="status" id="st-sim"></div>
+      <div id="sim-result" hidden>
+        <div class="chart" id="chart"></div>
+        <div class="legend">
+          <span class="key"><span class="swatch" style="background:var(--purple)"></span>Valore nominale</span>
+          <span class="key"><span class="swatch" style="background:var(--teal)"></span>Potere d'acquisto</span>
+        </div>
+        <p class="muted" id="sim-narrative" style="margin-top:14px"></p>
+        <ul class="muted" id="sim-assumptions" style="margin-top:10px; padding-left:18px"></ul>
+        <details>
+          <summary>Vedi i dati in tabella</summary>
+          <div id="sim-table"></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. domanda libera -->
+  <section id="s-ask" hidden>
+    <div class="card">
+      <h3>Chiedi</h3>
+      <h2>Una domanda sui tuoi conti</h2>
+      <div class="controls">
+        <input type="text" id="question" placeholder="Per esempio: cos'è l'imposta di bollo?" style="flex:1; min-width:260px" />
+        <button id="btn-ask">Chiedi</button>
+      </div>
+      <div class="status" id="st-ask"></div>
+      <div id="ask-result"></div>
+    </div>
+  </section>
+
+  <!-- 7. verifica -->
+  <section id="s-quiz" hidden>
+    <div class="card">
+      <h3>Verifica</h3>
+      <h2>Hai capito i tuoi numeri?</h2>
+      <div id="quiz"></div>
+      <div id="quiz-score" class="lead"></div>
+    </div>
+  </section>
+
+  <!-- 8. trasparenza -->
+  <section id="s-usage" hidden>
+    <div class="card">
+      <h3>Sotto il cofano</h3>
+      <h2>Cosa ha fatto il sistema</h2>
+      <p class="lead">Ogni agente, i token consumati e l'esito. Il CSV non è mai entrato in un prompt.</p>
+      <div class="usage" id="usage"></div>
+    </div>
+  </section>
+
+  <footer>
+    Conti Chiari <span class="mark">&gt;</span> Hagenthon &middot; Accenture Application Engineering
+  </footer>
+
+</div>
+<script src="app.js"></script>
+</body>
+</html>

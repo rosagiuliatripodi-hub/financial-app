@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "conti-chiari/concepts",
+  "title": "Concetti da insegnare",
+  "description": "Output del concept-mapper: quali concetti finanziari compaiono davvero nei dati di questa sessione, in ordine di rilevanza.",
+  "type": "object",
+  "required": ["session_id", "literacy_level", "concepts"],
+  "additionalProperties": false,
+  "properties": {
+    "session_id": { "type": "string" },
+    "literacy_level": {
+      "type": "string",
+      "enum": ["base", "intermedio"],
+      "description": "Dichiarato dall'utente all'avvio; determina il registro dell'explainer."
+    },
+    "concepts": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 5,
+      "description": "Massimo 5: oltre questa soglia il percorso educativo diventa illeggibile.",
+      "items": {
+        "type": "object",
+        "required": ["id", "label", "priority", "why_relevant", "evidence_transaction_ids"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Deve esistere in skills/glossario-finanziario/concetti.json",
+            "pattern": "^[a-z0-9-]+$"
+          },
+          "label": { "type": "string" },
+          "priority": { "type": "integer", "minimum": 1, "maximum": 5 },
+          "why_relevant": {
+            "type": "string",
+            "description": "Motivo ancorato ai dati, non generico. Es: 'compare 6 volte per 47 € totali'."
+          },
+          "evidence_transaction_ids": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string" },
+            "description": "Un concetto senza evidenza nei dati non va insegnato."
+          }
+        }
+      }
+    }
+  }
+}

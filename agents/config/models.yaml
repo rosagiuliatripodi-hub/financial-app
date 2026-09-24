@@ -1,0 +1,70 @@
+# Conti Chiari — tiering, budget e limiti operativi.
+# Ogni agente dichiara il modello minimo sufficiente al proprio task.
+
+defaults:
+  timeout_seconds: 30
+  max_retries: 2
+  retry_backoff_seconds: [1, 4]
+  response_format: json
+  temperature: 0
+
+tiers:
+  economy:
+    model: claude-haiku-4-5
+    use_when: task ad alto volume, output chiuso, verificabile a valle
+  quality:
+    model: claude-opus-5
+    use_when: qualità linguistica o giudizio con conseguenze per l'utente
+
+agents:
+  categorizer:
+    tier: economy
+    max_input_tokens: 4000
+    max_output_tokens: 2000
+    batch_size: 50          # transazioni per chiamata
+    notes: output verificato contro lo schema; errori finiscono in uncategorized
+
+  concept_mapper:
+    tier: economy
+    max_input_tokens: 2000
+    max_output_tokens: 800
+    notes: riceve solo l'aggregato di analysis.json, mai le transazioni
+
+  completeness:
+    tier: economy
+    max_input_tokens: 2500
+    max_output_tokens: 1200
+    notes: riceve l'aggregato e le sole descrizioni distinte, non le transazioni complete
+
+  explainer:
+    tier: quality
+    max_input_tokens: 3000
+    max_output_tokens: 2500
+    notes: unico agente che produce prosa lunga destinata all'utente
+
+  simulator:
+    tier: economy
+    max_input_tokens: 1500
+    max_output_tokens: 800
+    notes: i calcoli arrivano già fatti da app/finance.py, l'LLM solo narra
+
+  guardrail:
+    tier: quality
+    max_input_tokens: 3000
+    max_output_tokens: 1000
+    temperature: 0
+    notes: indipendente dal generatore; in dubbio escalation, mai pass
+
+  comprehension:
+    tier: economy
+    max_input_tokens: 2000
+    max_output_tokens: 1500
+    notes: quiz costruito sui numeri reali della sessione
+
+limits:
+  revision_cycles_max: 2        # explainer <-> guardrail
+  pipeline_wall_clock_seconds: 120
+  human_review_queue_max: 20
+
+secrets:
+  provider_api_key_env: ANTHROPIC_API_KEY   # mai su file, mai nel repo

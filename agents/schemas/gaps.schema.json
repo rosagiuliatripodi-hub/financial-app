@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "conti-chiari/gaps",
+  "title": "Perimetro incompleto dei dati",
+  "description": "Output del completeness. Contiene domande, mai raccomandazioni: serve a chiarire cosa l'estratto non può mostrare, non a suggerire cosa fare.",
+  "type": "object",
+  "required": ["session_id", "period_months", "gaps", "coverage_note"],
+  "additionalProperties": false,
+  "properties": {
+    "session_id": { "type": "string" },
+    "period_months": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Ampiezza della finestra osservata. È il motivo per cui certe voci non possono comparire."
+    },
+    "gaps": {
+      "type": "array",
+      "maxItems": 6,
+      "description": "Massimo 6: oltre questa soglia l'utente smette di rispondere.",
+      "items": {
+        "type": "object",
+        "required": ["id", "label", "cadence", "reason", "question", "confidence"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Deve esistere in skills/spese-ricorrenti-tipiche/checklist.json"
+          },
+          "label": { "type": "string" },
+          "cadence": {
+            "type": "string",
+            "enum": ["mensile", "bimestrale", "trimestrale", "semestrale", "annuale", "biennale"]
+          },
+          "reason": {
+            "type": "string",
+            "enum": ["fuori_finestra", "presupposto_rilevato", "dato_opaco"],
+            "description": "fuori_finestra: cadenza più lunga del periodo. presupposto_rilevato: indizi suggeriscono che la voce esista. dato_opaco: la spesa c'è ma non se ne conosce la destinazione (es. contante)."
+          },
+          "question": {
+            "type": "string",
+            "description": "Formulazione interrogativa. Una frase che non finisce con un punto interrogativo va riformulata, a meno che non descriva un limite dei dati."
+          },
+          "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+          "evidence_transaction_ids": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Transazioni che hanno fatto scattare il presupposto. Vuoto se reason è fuori_finestra."
+          },
+          "concept_id": { "type": "string" }
+        }
+      }
+    },
+    "coverage_note": {
+      "type": "string",
+      "maxLength": 400,
+      "description": "Una frase che spiega cosa questa finestra temporale può e non può mostrare. Fattuale, non prescrittiva."
+    }
+  }
+}

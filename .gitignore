@@ -1,0 +1,28 @@
+# Segreti — il repo di consegna è pubblico
+.env
+*.env
+!.env.example
+
+# Stato generato a runtime: contiene dati finanziari delle sessioni
+state/
+
+# Eccezione: la sessione dimostrativa è un artefatto della consegna, non output
+# di un utente. I dati sono sintetici (app/sample/estratto-conto-esempio.csv) e
+# serve sia come evidenza di validazione sia come replay in presentazione.
+!state/demo/
+!state/demo/**
+
+# Python
+app/.venv/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# OneDrive sync markers
+.????????-????-????-????-????????????

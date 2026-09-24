@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "conti-chiari/quiz",
+  "title": "Verifica di comprensione",
+  "description": "Quiz costruito sui numeri reali della sessione. Serve a produrre l'evidenza before/after richiesta dalla consegna.",
+  "type": "object",
+  "required": ["session_id", "questions"],
+  "additionalProperties": false,
+  "properties": {
+    "session_id": { "type": "string" },
+    "questions": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["id", "concept_id", "phase", "prompt", "options", "correct_index", "feedback"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string" },
+          "concept_id": { "type": "string" },
+          "phase": {
+            "type": "string",
+            "enum": ["before", "after"],
+            "description": "La stessa coppia di concetti è chiesta prima e dopo la spiegazione: la differenza è la misura del miglioramento."
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Deve citare un numero reale della sessione, non un esempio inventato."
+          },
+          "options": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 4,
+            "items": { "type": "string" }
+          },
+          "correct_index": { "type": "integer", "minimum": 0 },
+          "feedback": {
+            "type": "object",
+            "required": ["correct", "incorrect"],
+            "additionalProperties": false,
+            "properties": {
+              "correct": { "type": "string" },
+              "incorrect": {
+                "type": "string",
+                "description": "Spiega perché, non si limita a segnalare l'errore."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

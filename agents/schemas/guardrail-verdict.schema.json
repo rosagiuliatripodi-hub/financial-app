@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "conti-chiari/guardrail-verdict",
+  "title": "Verdetto del guardrail",
+  "description": "Emesso su ogni artefatto testuale diretto all'utente. In assenza di un verdetto 'pass' nulla viene mostrato.",
+  "type": "object",
+  "required": ["session_id", "target", "verdict", "violations", "numeric_integrity", "escalate_to_human"],
+  "additionalProperties": false,
+  "properties": {
+    "session_id": { "type": "string" },
+    "target": {
+      "type": "object",
+      "required": ["artifact", "section_index"],
+      "additionalProperties": false,
+      "properties": {
+        "artifact": { "type": "string", "enum": ["explanation.json", "simulation.json", "quiz.json", "chat_reply"] },
+        "section_index": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "verdict": {
+      "type": "string",
+      "enum": ["pass", "revise", "block"],
+      "description": "revise: l'explainer riscrive (max 2 cicli). block: non mostrabile, si passa alla risposta di reindirizzamento."
+    },
+    "violations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["rule_id", "severity", "quote", "reason", "suggested_fix"],
+        "additionalProperties": false,
+        "properties": {
+          "rule_id": {
+            "type": "string",
+            "enum": [
+              "NO_INVESTMENT_ADVICE",
+              "NO_PERSONALIZED_ADVICE",
+              "NO_BUY_SELL_CHOOSE",
+              "NO_PREDICTION_AS_FACT",
+              "NUMERIC_INTEGRITY",
+              "MEANING_DRIFT",
+              "UNEXPLAINED_JARGON"
+            ]
+          },
+          "severity": { "type": "string", "enum": ["block", "revise"] },
+          "quote": { "type": "string", "description": "Il frammento esatto che viola la regola" },
+          "reason": { "type": "string" },
+          "suggested_fix": { "type": "string" }
+        }
+      }
+    },
+    "numeric_integrity": {
+      "type": "object",
+      "required": ["checked", "mismatches"],
+      "additionalProperties": false,
+      "properties": {
+        "checked": { "type": "integer", "minimum": 0 },
+        "mismatches": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["value_in_text", "value_in_source", "ref"],
+            "additionalProperties": false,
+            "properties": {
+              "value_in_text": { "type": "number" },
+              "value_in_source": { "type": ["number", "null"] },
+              "ref": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "escalate_to_human": {
+      "type": "boolean",
+      "description": "true quando il guardrail non raggiunge una decisione netta. In dubbio non si passa mai."
+    }
+  }
+}

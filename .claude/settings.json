@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(./.venv/Scripts/python.exe -m pytest:*)",
+      "Bash(app/.venv/Scripts/python.exe -m pytest:*)",
+      "Bash(./.venv/Scripts/python.exe -m json.tool:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Read(./agents/**)",
+      "Read(./app/**)",
+      "Read(./.claude/**)",
+      "Read(./CLAUDE.md)",
+      "Glob",
+      "Grep"
+    ],
+    "deny": [
+      "Read(./app/.env)",
+      "Read(./**/.env)",
+      "Edit(./app/.env)",
+      "Edit(./state/**)",
+      "Bash(rm -rf:*)",
+      "Bash(git push:*)",
+      "Bash(curl:*)",
+      "Bash(./.venv/Scripts/pip.exe uninstall:*)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "d=$(cat); echo \"$d\" | grep -qE '\"file_path\": *\"[^\"]*app[^\"]*\\.py\"' || exit 0; cd \"$CLAUDE_PROJECT_DIR/app\" && ./.venv/Scripts/python.exe -m pytest tests/ -q 1>&2 || exit 2",
+            "timeout": 120
+          }
+        ]
+      }
+    ]
+  }
+}

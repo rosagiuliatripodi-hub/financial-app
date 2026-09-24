@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "conti-chiari/simulation",
+  "title": "Simulazione di scenario",
+  "description": "Lo scenario è sempre impostato dall'utente. Il sistema non propone scenari 'consigliati' e non presenta i risultati come previsioni.",
+  "type": "object",
+  "required": ["session_id", "scenario", "computed_by", "series", "concept_ids", "assumptions"],
+  "additionalProperties": false,
+  "properties": {
+    "session_id": { "type": "string" },
+    "scenario": {
+      "type": "object",
+      "required": ["type", "params", "set_by"],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["accantonamento_mensile", "costo_ricorrente_nel_tempo", "rata_e_costo_totale", "erosione_inflazione"]
+        },
+        "params": {
+          "type": "object",
+          "description": "Valori numerici impostati dall'utente tramite slider o campo, mai dedotti dal modello.",
+          "additionalProperties": { "type": "number" }
+        },
+        "set_by": {
+          "type": "string",
+          "const": "user",
+          "description": "Invariante: nessuno scenario è generato dal sistema di sua iniziativa."
+        }
+      }
+    },
+    "computed_by": {
+      "type": "string",
+      "const": "deterministic",
+      "description": "I numeri arrivano da app/finance.py. Un LLM non calcola mai questi valori."
+    },
+    "series": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["month", "contributed", "value_nominal", "value_real"],
+        "additionalProperties": false,
+        "properties": {
+          "month": { "type": "integer", "minimum": 0 },
+          "contributed": { "type": "number" },
+          "value_nominal": { "type": "number" },
+          "value_real": { "type": "number", "description": "Deflazionato al tasso impostato dall'utente" }
+        }
+      }
+    },
+    "concept_ids": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Concetti che la simulazione rende visibili, es. interesse-composto, inflazione"
+    },
+    "assumptions": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" },
+      "description": "Sempre esplicite in UI. Almeno una deve chiarire che i tassi sono ipotesi dell'utente e non previsioni."
+    }
+  }
+}

@@ -1,0 +1,159 @@
+{
+  "version": "1.0",
+  "voci": [
+    {
+      "id": "assicurazione-auto",
+      "label": "Assicurazione auto (RC)",
+      "cadenza": "annuale",
+      "finestra_minima_mesi": 12,
+      "indizi": ["assicurazione", "rc auto", "polizza auto", "unipol", "generali", "axa"],
+      "presupposto": "auto",
+      "rivelatori": ["carburante", "benzina", "distributore", "telepass", "autostrad", "bollo auto", "officina", "pedaggio"],
+      "domanda": "Nel periodo non vedo l'assicurazione auto. Se hai un'auto, la RC si paga una volta l'anno e in tre mesi non compare: vuoi aggiungerla al quadro?",
+      "concetto_collegato": "costo-ricorrente"
+    },
+    {
+      "id": "bollo-auto",
+      "label": "Bollo auto",
+      "cadenza": "annuale",
+      "finestra_minima_mesi": 12,
+      "indizi": ["bollo auto", "tassa automobilistica", "aci"],
+      "presupposto": "auto",
+      "rivelatori": ["carburante", "benzina", "assicurazione auto", "officina", "telepass"],
+      "domanda": "Il bollo auto è annuale: in un estratto di pochi mesi non si vede. Se hai un'auto, quanto paghi all'anno?",
+      "concetto_collegato": "costo-ricorrente"
+    },
+    {
+      "id": "manutenzione-auto",
+      "label": "Manutenzione e revisione auto",
+      "cadenza": "biennale",
+      "finestra_minima_mesi": 12,
+      "indizi": ["officina", "gommista", "revisione", "tagliando", "carrozzeria"],
+      "presupposto": "auto",
+      "rivelatori": ["carburante", "benzina", "assicurazione auto"],
+      "domanda": "Tagliando, gomme e revisione non cadono ogni mese ma tornano: vuoi indicare quanto ti costano in un anno?",
+      "concetto_collegato": "costo-ricorrente"
+    },
+    {
+      "id": "imu",
+      "label": "IMU",
+      "cadenza": "semestrale",
+      "finestra_minima_mesi": 12,
+      "indizi": ["imu", "f24", "tributi comunali"],
+      "presupposto": "casa_proprieta",
+      "rivelatori": ["mutuo", "spese condominiali", "condominio"],
+      "domanda": "L'IMU si paga in due rate all'anno. Se sei proprietario di casa, vuoi aggiungerla?",
+      "concetto_collegato": "costo-ricorrente"
+    },
+    {
+      "id": "tari",
+      "label": "TARI (rifiuti)",
+      "cadenza": "annuale",
+      "finestra_minima_mesi": 12,
+      "indizi": ["tari", "tassa rifiuti", "rifiuti", "igiene ambientale"],
+      "presupposto": "sempre",
+      "rivelatori": [],
+      "domanda": "La tassa sui rifiuti arriva una o poche volte l'anno: in questo periodo non compare. Sai quanto paghi?",
+      "concetto_collegato": "costo-ricorrente"
+    },
+    {
+      "id": "canone-rai",
+      "label": "Canone RAI",
+      "cadenza": "annuale",
+      "finestra_minima_mesi": 12,
+      "indizi": ["canone rai", "canone tv"],
+      "presupposto": "sempre",
+      "rivelatori": ["bolletta energia", "energia elettrica", "enel", "luce"],
+      "domanda": "Il canone RAI è addebitato nella bolletta elettrica in dieci rate da gennaio a ottobre. Vuoi verificare se è incluso nelle tue bollette?",
+      "concetto_collegato": "costo-ricorrente"
+    },
+    {
+      "id": "assicurazione-casa",
+      "label": "Assicurazione casa",
+      "cadenza": "annuale",
+      "finestra_minima_mesi": 12,
+      "indizi": ["assicurazione casa", "polizza abitazione", "polizza casa"],
+      "presupposto": "sempre",
+      "rivelatori": ["mutuo", "affitto", "spese condominiali"],
+      "domanda": "Una polizza sulla casa, se c'è, si paga una volta l'anno. Ne hai una?",
+      "concetto_collegato": "costo-ricorrente"
+    },
+    {
+      "id": "spese-condominiali",
+      "label": "Spese condominiali",
+      "cadenza": "trimestrale",
+      "finestra_minima_mesi": 6,
+      "indizi": ["condominio", "spese condominiali", "amministratore"],
+      "presupposto": "sempre",
+      "rivelatori": ["affitto", "mutuo"],
+      "domanda": "Le spese condominiali spesso si pagano a rate trimestrali o in contanti. Le hai considerate?",
+      "concetto_collegato": "costo-ricorrente"
+    },
+    {
+      "id": "bollette-utenze",
+      "label": "Bollette (luce, gas, acqua)",
+      "cadenza": "bimestrale",
+      "finestra_minima_mesi": 6,
+      "indizi": ["bolletta", "energia", "gas", "acqua", "enel", "eni", "a2a", "hera", "acquedotto"],
+      "presupposto": "sempre",
+      "rivelatori": [],
+      "domanda": "Alcune utenze arrivano ogni due o tre mesi, e il gas pesa molto di più d'inverno. Il periodo che hai caricato è rappresentativo?",
+      "concetto_collegato": "costo-ricorrente"
+    },
+    {
+      "id": "spese-mediche",
+      "label": "Spese mediche e dentista",
+      "cadenza": "annuale",
+      "finestra_minima_mesi": 12,
+      "indizi": ["dentista", "visita", "analisi", "ticket", "medico", "fisioterapia", "occhiali"],
+      "presupposto": "sempre",
+      "rivelatori": [],
+      "domanda": "Dentista, occhiali e visite non cadono ogni mese ma tornano ogni anno. Vuoi indicare una cifra annuale?",
+      "concetto_collegato": "costo-ricorrente"
+    },
+    {
+      "id": "vacanze-festivita",
+      "label": "Vacanze e festività",
+      "cadenza": "annuale",
+      "finestra_minima_mesi": 12,
+      "indizi": ["hotel", "booking", "volo", "agenzia viaggi", "regalo"],
+      "presupposto": "sempre",
+      "rivelatori": [],
+      "domanda": "Vacanze e regali si concentrano in pochi mesi l'anno. Se il tuo estratto non li copre, il quadro mensile risulta più leggero del reale.",
+      "concetto_collegato": "costo-ricorrente"
+    },
+    {
+      "id": "rata-finanziamento",
+      "label": "Rate e finanziamenti",
+      "cadenza": "mensile",
+      "finestra_minima_mesi": 1,
+      "indizi": ["rata", "finanziamento", "prestito", "mutuo", "cessione del quinto"],
+      "presupposto": "sempre",
+      "rivelatori": [],
+      "domanda": "Hai altri pagamenti a rate che non passano da questo conto — per esempio su una carta o con un altro istituto?",
+      "concetto_collegato": "costo-del-credito"
+    },
+    {
+      "id": "contante",
+      "label": "Spese in contanti",
+      "cadenza": "mensile",
+      "finestra_minima_mesi": 1,
+      "indizi": [],
+      "presupposto": "sempre",
+      "rivelatori": ["prelievo", "atm"],
+      "domanda": "Vedo prelievi di contante: quei soldi sono usciti dal conto ma non sappiamo in cosa sono stati spesi. Vuoi indicare a grandi linee dove vanno?",
+      "concetto_collegato": "entrate-uscite"
+    },
+    {
+      "id": "altro-conto",
+      "label": "Movimenti su altri conti o carte",
+      "cadenza": "mensile",
+      "finestra_minima_mesi": 1,
+      "indizi": [],
+      "presupposto": "sempre",
+      "rivelatori": [],
+      "domanda": "Questo è un solo conto. Se usi anche una carta prepagata o un altro conto, il quadro qui è parziale: ci sono spese che non vediamo?",
+      "concetto_collegato": "entrate-uscite"
+    }
+  ]
+}

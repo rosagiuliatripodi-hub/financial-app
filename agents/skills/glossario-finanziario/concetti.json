@@ -1,0 +1,105 @@
+{
+  "version": "1.0",
+  "concetti": [
+    {
+      "id": "entrate-uscite",
+      "label": "Entrate e uscite",
+      "livello": "fondamentale",
+      "trigger": [],
+      "definizione_base": "Le entrate sono i soldi che arrivano sul conto, le uscite quelli che escono. La differenza tra le due è quello che ti resta nel periodo.",
+      "definizione_intermedio": "Il saldo di periodo è la differenza tra entrate e uscite. Un saldo positivo non coincide con la liquidità disponibile se ci sono impegni già assunti ma non ancora addebitati.",
+      "opacita": 1,
+      "errore_tipico": "Confondere il saldo del conto con quanto si può spendere, ignorando le uscite già programmate."
+    },
+    {
+      "id": "costo-ricorrente",
+      "label": "Costo ricorrente",
+      "livello": "fondamentale",
+      "trigger": ["abbonamento", "canone", "rata", "addebito sdd", "rid", "mensile"],
+      "definizione_base": "È una spesa che torna ogni mese o ogni anno, sempre uguale. Presa una volta sembra piccola, ma sommata su dodici mesi pesa molto di più.",
+      "definizione_intermedio": "Spesa a cadenza fissa. L'impatto annuo si ottiene moltiplicando l'importo per la frequenza: è la grandezza rilevante per confrontarla con le altre voci di spesa.",
+      "opacita": 1,
+      "errore_tipico": "Valutare un costo ricorrente sul singolo addebito invece che sul totale annuo."
+    },
+    {
+      "id": "imposta-bollo",
+      "label": "Imposta di bollo",
+      "livello": "base",
+      "trigger": ["imposta di bollo", "imposta bollo", "bollo c/c", "bollo conto"],
+      "definizione_base": "È una tassa dello Stato sul conto corrente. Si paga quando nel conto restano in media più di 5.000 euro durante l'anno.",
+      "definizione_intermedio": "Tributo erariale sui rapporti di conto corrente, dovuto al superamento di una giacenza media annua di 5.000 €. Per le persone fisiche è un importo fisso annuo, addebitato di norma in quote trimestrali.",
+      "opacita": 3,
+      "errore_tipico": "Crederla una commissione della banca, e quindi negoziabile o evitabile cambiando istituto."
+    },
+    {
+      "id": "canone-conto",
+      "label": "Canone del conto",
+      "livello": "base",
+      "trigger": ["canone", "spese tenuta conto", "competenze", "canone mensile conto"],
+      "definizione_base": "È quanto la banca ti fa pagare per tenere aperto il conto. A differenza dell'imposta di bollo, questo soldo va alla banca, non allo Stato.",
+      "definizione_intermedio": "Corrispettivo per la gestione del rapporto di conto. Voce contrattuale, distinta dalle imposte: rientra nell'ICC (Indicatore dei Costi Complessivi) del conto.",
+      "opacita": 2,
+      "errore_tipico": "Sommarlo all'imposta di bollo come se fosse un'unica voce, non distinguendo il costo del servizio dalla tassa."
+    },
+    {
+      "id": "commissione-prelievo",
+      "label": "Commissione di prelievo",
+      "livello": "base",
+      "trigger": ["commissione prelievo", "prelievo atm", "commissione atm", "prelievo altro istituto"],
+      "definizione_base": "È il costo che paghi quando prelevi contante da uno sportello di un'altra banca. Piccolo ogni volta, ma si somma a ogni prelievo.",
+      "definizione_intermedio": "Onere applicato ai prelievi su ATM di istituti terzi. Il costo effettivo dipende dalla frequenza: molti prelievi di importo ridotto hanno un'incidenza percentuale molto superiore a pochi prelievi consistenti.",
+      "opacita": 2,
+      "errore_tipico": "Considerarla trascurabile perché l'importo unitario è basso, senza guardare la frequenza."
+    },
+    {
+      "id": "tan-taeg",
+      "label": "TAN e TAEG",
+      "livello": "intermedio",
+      "trigger": ["tan", "taeg", "finanziamento", "prestito", "rateizzazione"],
+      "definizione_base": "Sono due modi di misurare quanto costa un prestito. Il primo conta solo gli interessi, il secondo conta anche tutte le spese in più. Quello che conta davvero è il secondo.",
+      "definizione_intermedio": "Il TAN è il tasso di interesse puro sul capitale. Il TAEG include anche oneri accessori, spese di istruttoria e assicurazioni obbligatorie: è l'indicatore comparabile del costo effettivo del credito.",
+      "opacita": 3,
+      "errore_tipico": "Confrontare due finanziamenti guardando il TAN, quando è il TAEG a esprimere il costo complessivo."
+    },
+    {
+      "id": "costo-del-credito",
+      "label": "Costo totale del credito",
+      "livello": "intermedio",
+      "trigger": ["rata", "finanziamento", "dilazione", "tasso zero"],
+      "definizione_base": "È quanto paghi in più rispetto al prezzo del prodotto, quando lo compri a rate. Si trova sommando tutte le rate e togliendo il prezzo iniziale.",
+      "definizione_intermedio": "Differenza tra il montante complessivo delle rate e il capitale finanziato. Anche una dilazione a tasso zero può presentare un costo, se include spese di istruttoria o incasso rata.",
+      "opacita": 3,
+      "errore_tipico": "Assumere che 'tasso zero' significhi costo zero, ignorando le spese accessorie."
+    },
+    {
+      "id": "interesse-composto",
+      "label": "Interesse composto",
+      "livello": "base",
+      "trigger": [],
+      "definizione_base": "Quando lasci i soldi da parte, ogni anno gli interessi si sommano al capitale. L'anno dopo gli interessi si calcolano anche su quelli già guadagnati.",
+      "definizione_intermedio": "Capitalizzazione degli interessi sul montante anziché sul solo capitale iniziale. La crescita è esponenziale, non lineare: l'orizzonte temporale incide più del tasso.",
+      "opacita": 2,
+      "errore_tipico": "Stimare il risultato moltiplicando linearmente il rendimento annuo per gli anni."
+    },
+    {
+      "id": "inflazione",
+      "label": "Inflazione",
+      "livello": "base",
+      "trigger": [],
+      "definizione_base": "È l'aumento dei prezzi nel tempo. Vuol dire che con gli stessi 100 euro, tra qualche anno compri un po' meno cose.",
+      "definizione_intermedio": "Incremento generalizzato del livello dei prezzi. Erode il valore reale delle somme nominali: un capitale fermo mantiene il valore nominale ma perde potere d'acquisto.",
+      "opacita": 2,
+      "errore_tipico": "Ritenere che i soldi fermi sul conto mantengano il loro valore perché la cifra non cambia."
+    },
+    {
+      "id": "potere-acquisto",
+      "label": "Potere d'acquisto",
+      "livello": "intermedio",
+      "trigger": [],
+      "definizione_base": "È quanto riesci davvero a comprare con i tuoi soldi. Se i prezzi salgono e lo stipendio resta uguale, il potere d'acquisto scende.",
+      "definizione_intermedio": "Valore reale di una somma, ottenuto deflazionando il valore nominale per l'indice dei prezzi. È la grandezza da confrontare su orizzonti pluriennali.",
+      "opacita": 3,
+      "errore_tipico": "Confrontare importi di anni diversi senza deflazionarli."
+    }
+  ]
+}

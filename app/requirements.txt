@@ -1,0 +1,9 @@
+anthropic>=0.40
+fastapi>=0.115
+uvicorn[standard]>=0.32
+python-multipart>=0.0.12
+python-dotenv>=1.0
+pydantic>=2.9
+jsonschema>=4.23
+PyYAML>=6.0
+pytest>=8.3

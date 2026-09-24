@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "conti-chiari/analysis",
+  "title": "Analisi categorizzata",
+  "description": "Output del categorizer. Aggregato: da qui in poi le singole transazioni circolano solo come id di evidenza.",
+  "type": "object",
+  "required": ["session_id", "categories", "recurring", "fees", "totals", "uncategorized", "needs_human_review"],
+  "additionalProperties": false,
+  "properties": {
+    "session_id": { "type": "string" },
+    "categories": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "total", "count", "share", "transaction_ids"],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "enum": ["Casa", "Spesa", "Trasporti", "Salute", "Istruzione", "Tempo libero", "Abbonamenti", "Rate e finanziamenti", "Commissioni e imposte", "Entrate", "Altro"]
+          },
+          "total": { "type": "number" },
+          "count": { "type": "integer", "minimum": 1 },
+          "share": { "type": "number", "minimum": 0, "maximum": 1 },
+          "transaction_ids": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "recurring": {
+      "type": "array",
+      "description": "Costi che si ripetono. Il sistema li espone, non suggerisce di eliminarli.",
+      "items": {
+        "type": "object",
+        "required": ["label", "amount", "cadence", "occurrences", "transaction_ids", "confidence"],
+        "additionalProperties": false,
+        "properties": {
+          "label": { "type": "string" },
+          "amount": { "type": "number" },
+          "cadence": { "type": "string", "enum": ["mensile", "bimestrale", "trimestrale", "annuale"] },
+          "occurrences": { "type": "integer", "minimum": 2 },
+          "transaction_ids": { "type": "array", "items": { "type": "string" } },
+          "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+        }
+      }
+    },
+    "fees": {
+      "type": "array",
+      "description": "Commissioni e imposte riconosciute, agganciate a un concetto insegnabile.",
+      "items": {
+        "type": "object",
+        "required": ["label", "amount", "concept_id", "transaction_ids"],
+        "additionalProperties": false,
+        "properties": {
+          "label": { "type": "string" },
+          "amount": { "type": "number" },
+          "concept_id": { "type": "string" },
+          "transaction_ids": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "totals": {
+      "type": "object",
+      "required": ["income", "expense", "net"],
+      "additionalProperties": false,
+      "properties": {
+        "income": { "type": "number", "minimum": 0 },
+        "expense": { "type": "number", "maximum": 0 },
+        "net": { "type": "number" }
+      }
+    },
+    "uncategorized": {
+      "type": "object",
+      "required": ["count", "total", "transaction_ids"],
+      "additionalProperties": false,
+      "properties": {
+        "count": { "type": "integer", "minimum": 0 },
+        "total": { "type": "number" },
+        "transaction_ids": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "needs_human_review": {
+      "type": "array",
+      "description": "Confidence sotto 0.5: l'utente conferma prima che il dato entri nella spiegazione.",
+      "items": {
+        "type": "object",
+        "required": ["transaction_id", "reason", "confidence"],
+        "additionalProperties": false,
+        "properties": {
+          "transaction_id": { "type": "string" },
+          "reason": { "type": "string" },
+          "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "conti-chiari/explanation",
+  "title": "Spiegazione destinata all'utente",
+  "description": "Output dell'explainer. Nessuna sezione raggiunge l'utente prima del verdetto del guardrail.",
+  "type": "object",
+  "required": ["session_id", "literacy_level", "sections"],
+  "additionalProperties": false,
+  "properties": {
+    "session_id": { "type": "string" },
+    "literacy_level": { "type": "string", "enum": ["base", "intermedio"] },
+    "sections": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Almeno una sezione: l'orchestratore legge sections[0] a ogni ciclo di revisione.",
+      "items": {
+        "type": "object",
+        "required": ["concept_id", "title", "plain_text", "user_numbers"],
+        "additionalProperties": false,
+        "properties": {
+          "concept_id": { "type": "string" },
+          "title": { "type": "string", "maxLength": 60 },
+          "plain_text": {
+            "type": "string",
+            "maxLength": 900,
+            "description": "Registro A2 per literacy_level 'base'. Frasi brevi, niente gergo non spiegato."
+          },
+          "user_numbers": {
+            "type": "array",
+            "description": "Ogni cifra citata nel testo deve comparire qui con la sua fonte. Il guardrail verifica la corrispondenza.",
+            "items": {
+              "type": "object",
+              "required": ["label", "value", "source"],
+              "additionalProperties": false,
+              "properties": {
+                "label": { "type": "string" },
+                "value": { "type": "number" },
+                "source": {
+                  "type": "object",
+                  "required": ["kind", "ref"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "type": "string",
+                      "enum": ["transaction", "aggregate", "computation", "riferimento"],
+                      "description": "riferimento: soglia normativa o valore di dominio preso dal glossario, non dai dati dell'utente (es. la giacenza di 5.000 € sopra cui è dovuta l'imposta di bollo)"
+                    },
+                    "ref": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": { "type": "string" },
+                      "description": "id di transazione, chiave di analysis.json, id di calcolo deterministico, o id del concetto nel glossario"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
