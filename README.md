@@ -137,14 +137,25 @@ il verdetto è `escalate_to_human`: il sistema fallisce chiuso.
   correttamente agli esiti degli agenti, **non** che i prompt reali producano output conforme
   agli schemi. Quello richiede una chiave e una esecuzione vera.
 
+## Team
+
+**Fabio Gorini** — architettura agentica, backend Python, orchestrazione,
+test automatici, istruzioni degli agenti.
+
+**Rosa Giulia Tripodi** — frontend standalone (`app/static/demo.html`):
+design bancario multi-pagina, parsing CSV lato client, modalità inserimento
+manuale, accessibilità (ARIA, alto contrasto, font size), presentazione finale.
+
 ## Uso dell'AI nel progetto
 
-Il codice è stato scritto con Claude Code. Le istruzioni degli agenti in
-`agents/subagents/` **sono** i system prompt caricati a runtime da
+Il progetto è stato sviluppato interamente con Claude Code. Le istruzioni degli
+agenti in `agents/subagents/` **sono** i system prompt caricati a runtime da
 `agents_runtime.py`: non esistono due versioni che possono divergere.
 
 Gli interventi umani hanno riguardato le decisioni di perimetro — in
 particolare il passaggio da "dare best practice" a "fare domande", che ha
 riscritto una funzionalità intera — e la verifica dei fallback, dove un
 suggerimento plausibile avrebbe portato il sistema a inventare dati invece di
-dichiararli mancanti.
+dichiararli mancanti. Sul lato frontend, le scelte di UX (multi-pagina,
+inserimento manuale, accessibilità) sono state guidate dall'utente iterazione
+per iterazione.
