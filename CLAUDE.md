@@ -23,7 +23,7 @@ riscriverli altrove: quel file è sia documentazione sia system prompt.
 Dalla cartella `app/`, con il virtualenv già creato in `app/.venv`:
 
 ```
-./.venv/Scripts/python.exe -m pytest tests/ -q          # 66 test, devono restare verdi
+./.venv/Scripts/python.exe -m pytest tests/ -q          # 68 test, devono restare verdi
 ./.venv/Scripts/python.exe -m uvicorn main:app --reload # server su :8000
 ./.venv/Scripts/pip.exe install -r requirements.txt
 ```

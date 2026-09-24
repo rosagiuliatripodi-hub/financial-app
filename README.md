@@ -55,18 +55,19 @@ cd app && ./.venv/Scripts/python.exe -m pytest tests/ -q
 
 ```
 /
-├── app/              prototipo: FastAPI + pagina statica
+├── app/              prototipo: FastAPI + frontend standalone
 │   ├── parser.py         CSV -> transazioni normalizzate (deterministico)
 │   ├── finance.py        matematica finanziaria (deterministica, testata)
 │   ├── agents_runtime.py tiering, retry, validazione schema, contabilità token
 │   ├── orchestrator.py   sequenza, stato su disco, fallback, revisione
 │   ├── main.py           API
-│   ├── static/           interfaccia
+│   ├── static/           demo.html (standalone), app.js, style.css
 │   └── tests/            45 test sulla parte deterministica
 ├── agents/           struttura agentica di runtime  →  agents/README.md
 ├── presentation/     presentazione HTML (5 minuti, con note relatore)
 ├── .claude/          struttura agentica di sviluppo (subagenti, comandi, hook)
-└── CLAUDE.md         contesto operativo per chi lavora sul repo
+├── CLAUDE.md         contesto operativo per chi lavora sul repo
+└── README.md         questo file
 ```
 
 `agents/` e `.claude/` non si sovrappongono: il primo contiene gli agenti che
